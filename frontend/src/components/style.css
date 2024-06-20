@@ -1,0 +1,32 @@
+.loginPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:url('../../public/images/Empstockimg.jpg');
+    background: linear-gradient(rgba(11,11,11,0.5), rgba(10,10,10,0.5)), url('../../public/images/Empstockimg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;}
+
+.loginForm{
+    box-sizing: border-box;
+    box-shadow: 1px 1px 1px 1px rgba(0,0, 0, 0.2); 
+    padding: 3rem;
+    color: #fff; 
+    background: rgba(0,0,0, 0.6);
+    border-radius: 5px;
+    width: 25%;
+}
+.input-grp input{width: 93%;padding: 10px;margin: 5px 0;}
+.input-grp-chck input{margin-right: 10px;}
+.pg-header{text-align: center;padding: 10px 0; font-size: 35px;}
+.submit-btn{
+    background-color: green;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 20px;
+    width: 100%;
+}
