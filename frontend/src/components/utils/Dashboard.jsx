@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom"
+import {NavLink, Outlet} from "react-router-dom"
 import "bootstrap-icons/font/bootstrap-icons.css"
 
 
@@ -53,6 +53,7 @@ const Dashboard = () => {
           <div className="p-2 d-flex justify-content-center shadow">
             <h4>Employee Management System</h4>
           </div>
+          <Outlet/>
         </div>
       </div>
     </div>
