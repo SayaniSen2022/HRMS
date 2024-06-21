@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div>
         <nav className="nav-cont">
-            <ul>
+            <ul className='mb-0'>
                 <li><NavLink to="/" style={({isActive})=>({color: isActive ? "deeppink": '', opacity: isActive ? 1 : ""})}>Home</NavLink></li>
                 {/* <li><NavLink to="/signup" style={({isActive})=>({color: isActive ? "deeppink": '', opacity: isActive ? 1 : ""})}>Sign Up</NavLink></li> */}
                 <li><NavLink to="/adminlogin" style={({isActive})=>({color: isActive ? "deeppink": '', opacity: isActive ? 1 : ""})}>Login</NavLink></li>
