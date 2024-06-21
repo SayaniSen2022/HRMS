@@ -24,7 +24,7 @@ router.post('/adminlogin', (req, res)=>{
             return res.json({loginStatus: true})
         }
         else{
-            return res.json({loginStatus: false, Error: "Wrong credentials"})
+            return res.json({loginStatus: false, Error: "Wrong email or password"})
         }
     })
 })

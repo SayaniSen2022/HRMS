@@ -18,6 +18,8 @@
     border-radius: 5px;
     width: 25%;
 }
+
+.input-grp-chck, .input-grp{padding: 5px 0;}
 .input-grp input{width: 93%;padding: 10px;margin: 5px 0;}
 .input-grp-chck input{margin-right: 10px;}
 .pg-header{text-align: center;padding: 10px 0; font-size: 35px;}
@@ -30,3 +32,4 @@
     font-size: 20px;
     width: 100%;
 }
+.error{color: red;}
