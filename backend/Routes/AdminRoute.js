@@ -7,8 +7,11 @@ const router = express.Router();
 router.post('/adminlogin', (req, res)=>{
     // console.log(req.body)
 
-    const sql = 'SELECT * admin WHERE email = ? AND password = ?';
-    con.query(sql,[req.body.email, req.body.password], (err, result)=>{
+    const sql = "SELECT * FROM `admin` WHERE `email` = ? AND `password` = ?";
+
+    const values = [req.body.email, req.body.password];
+    
+    con.query(sql, values, (err, result)=>{
         if(err) return res.json({loginStatus: false, Error: "Query error"})
         if(result.length > 0){
             const email = result[0].email;
