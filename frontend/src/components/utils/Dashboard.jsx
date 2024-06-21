@@ -17,7 +17,7 @@ const Dashboard = () => {
             </NavLink>
             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li className="w-100">
-                <NavLink to="/dashboard"  className="nav-NavLink px-0 align-middle text-decoration-none" style={({isActive})=>({color: isActive ? "deeppink": 'white', opacity: isActive ? 1 : ""})}>
+                <NavLink to="/dashboard"  className="nav-NavLink px-0 align-middle text-decoration-none text-white">
                   <i className="fs-4 bi-speedometer2 ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Dashboard</span>
                 </NavLink>
