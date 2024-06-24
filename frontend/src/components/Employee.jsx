@@ -4,8 +4,7 @@ import axios from "axios";
 import "./style.css";
 
 const Employee = () => {
-const[employee, setEmployee] = useState([]);
-
+  const[employee, setEmployee] = useState([]);
 
   useEffect(()=>{
     axios.get("http://localhost:3000/auth/employee")
@@ -19,6 +18,16 @@ const[employee, setEmployee] = useState([]);
     .catch(err => console.log(err));
   },[])
 
+  const handleDelete = (id) => {
+    axios.delete('http://localhost:3000/auth/delete_employee/'+id)
+    .then(result => {
+        if(result.data.Status) {
+            window.location.reload()
+        } else {
+            alert(result.data.Error)
+        }
+    })
+  }
 
   return (
     <div className="px-5 mt-3">
@@ -51,7 +60,7 @@ const[employee, setEmployee] = useState([]);
                     <td>{emp.salary}</td>
                     <td>
                       <Link to={`/dashboard/edit_employee/`+emp.id} className="btn btn-info btn-sm me-2">Edit</Link>
-                      <Link className="btn btn-warning btn-sm">Delete</Link>
+                      <Link className="btn btn-warning btn-sm" onClick={() => handleDelete(emp.id)}>Delete</Link>
                     </td>
                   </tr>
                 ))
