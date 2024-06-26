@@ -9,11 +9,15 @@ import Profile from "./components/Profile";
 import AddCategory from "./components/AddCategory";
 import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
+import Start from "./components/Start";
+import EmployeeLogin from "./components/EmployeeLogin";
 
 function App() {  
   return (
     <Routes>
+      <Route path="/start" element={<Start/>}/>
       <Route path="/adminlogin" element={<Login/>}/>
+      <Route path="/employee_login" element={<EmployeeLogin/>}/>
       <Route path="/dashboard" element={<Dashboard/>}>        
         <Route path="" element={<Home/>}/>
         <Route path="/dashboard/employee" element={<Employee/>}/>
