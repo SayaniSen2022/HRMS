@@ -22,7 +22,7 @@ const Employee = () => {
     axios.delete('http://localhost:3000/auth/delete_employee/'+id)
     .then(result => {
         if(result.data.Status) {
-            window.location.reload()
+          window.location.reload()
         } else {
             alert(result.data.Error)
         }
