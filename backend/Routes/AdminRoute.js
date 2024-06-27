@@ -165,6 +165,41 @@ router.get('/admin_records', (req, res)=>{
 })
 })
 
+router.get('/admin/:id', (req, res) => {
+  const id = req.params.id;
+  // console.log(id);
+  const sql = "SELECT * FROM `admin` WHERE `id` = ?";
+  con.query(sql,[id], (err, result) => {
+   if(err) return res.json({Status: false, Error: "Query Error"})
+   return res.json({Status: true, Result: result})
+ })
+ });
+ 
+ router.put('/edit_admin/:id', (req, res) => {
+   const id = req.params.id;
+   const sql = `UPDATE admin 
+       SET email = ?, password = ? WHERE id = ?`
+   const values = [
+       req.body.email,
+       req.body.password
+   ]
+   con.query(sql,[...values, id], (err, result) => {
+       if(err) return res.json({Status: false, Error: "Query Error"+err})
+       return res.json({Status: true, Result: result})
+   })
+ })
+
+ //admin delete route
+
+/* router.delete('/delete_admin/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM `admin` where `id` = ?"
+  con.query(sql,[id], (err, result) => {
+      if(err) return res.json({Status: false, Error: "Query Error"+err})
+      return res.json({Status: true, Result: result})
+  })
+}) */
+
 router.get('/logout', (req, res)=>{
   res.clearCookie('token');
   return res.json({Status: true})

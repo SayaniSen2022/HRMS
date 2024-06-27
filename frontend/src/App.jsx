@@ -13,6 +13,7 @@ import Start from "./components/Start";
 import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
 import { PrivateRoute } from "./components/PrivateRoute";
+import EditAdmin from "./components/EditAdmin";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/dashboard/add_category" element={<AddCategory/>}/>
         <Route path="/dashboard/add_employee" element={<AddEmployee/>}/>
         <Route path="/dashboard/edit_employee/:id" element={<EditEmployee/>}/>
+        <Route path="/dashboard/edit_admin/:id" element={<EditAdmin/>}/>
       </Route>      
     </Routes>
   )

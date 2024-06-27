@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0);
@@ -53,6 +54,18 @@ const Home = () => {
     })
   }
 
+  //admin delete
+ /* const handleDelete = (id) => {
+    axios.delete('http://localhost:3000/auth/delete_admin/'+id)
+    .then(result => {
+        if(result.data.Status) {
+          window.location.reload()
+        } else {
+            alert(result.data.Error)
+        }
+    })
+  } */
+
   return (
     <div>
       <div className="p-3 d-flex justify-content-around mt-3">
@@ -101,8 +114,8 @@ const Home = () => {
               <tr key={a.id}>
                 <td>{a.email}</td>
                 <td>
-                      <button className="btn btn-info btn-sm me-2">Edit</button>
-                      <button className="btn btn-warning btn-sm">Delete</button>
+                      <Link to={`/dashboard/edit_admin/`+a.id} className="btn btn-info btn-sm me-2">Edit</Link>
+                      <Link className="btn btn-warning btn-sm">Delete</Link>
                 </td>
               </tr>
             ))}
