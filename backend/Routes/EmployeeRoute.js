@@ -7,9 +7,7 @@ const router = express.Router();
 
 router.post("/employee_login", (req, res) => {
   // console.log(req.body)
-
   const sql = "SELECT * FROM `employee` WHERE `email` = ?";
-
   con.query(sql, [req.body.email], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });
     if (result.length > 0) {
@@ -32,5 +30,20 @@ router.post("/employee_login", (req, res) => {
     }
   });
 });
+
+router.get('/detail/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM employee WHERE id = ?"
+  con.query(sql, [id], (err, result) => {
+    if(err) return res.json({Status: false});
+    return res.json(result)
+    
+  })
+})
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  return res.json({Status: true})
+})
 
 export { router as EmployeeRouter };
