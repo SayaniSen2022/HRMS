@@ -19,7 +19,8 @@ const EmployeeDetail = () => {
     const handleLogout = () => {
         axios.get("http://localhost:3000/employee/logout").then((result) => {
             if (result.data.Status) {
-              navigate("/start");
+                localStorage.removeItem("valid")
+              navigate("/");
             }
           });
     }

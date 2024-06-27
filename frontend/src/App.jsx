@@ -12,15 +12,18 @@ import EditEmployee from "./components/EditEmployee";
 import Start from "./components/Start";
 import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
+import { PrivateRoute } from "./components/PrivateRoute";
 
-function App() {  
+
+function App() {
+ 
   return (
     <Routes>
-      <Route path="/start" element={<Start/>}/>
+      <Route path="/" element={<Start/>}/>
       <Route path="/adminlogin" element={<Login/>}/>
       <Route path="/employee_login" element={<EmployeeLogin/>}/>
       <Route path="/employee_detail/:id" element={<EmployeeDetail/>}/>
-      <Route path="/dashboard" element={<Dashboard/>}>        
+      <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>        
         <Route path="" element={<Home/>}/>
         <Route path="/dashboard/employee" element={<Employee/>}/>
         <Route path="/dashboard/category" element={<Category/>}/>

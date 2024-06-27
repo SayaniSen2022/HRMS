@@ -19,6 +19,7 @@ const Login = () => {
         axios.post('http://localhost:3000/auth/adminlogin', values)
         .then(result => {
             if(result.data.loginStatus){
+                localStorage.setItem("valid", true)
                 navigate('/dashboard');
             }else{
                 setError(result.data.Error)
@@ -42,10 +43,6 @@ const Login = () => {
                 <div className="input-grp">
                     <label htmlFor="password">Password:</label>
                     <input type="password" name="password" id="password" placeholder="Enter password" onChange={(e)=>setValues({...values, password: e.target.value})} />
-                </div>
-                <div className="input-grp-chck">
-                    <input type="checkbox" name="tick" id="tickmark" placeholder="Enter password" />
-                    <label htmlFor="tickmark">I Agree to the Terms & Conditions.</label>
                 </div>
                 <button className="submit-btn">Login</button>
 
