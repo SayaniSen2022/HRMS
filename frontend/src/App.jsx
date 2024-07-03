@@ -6,6 +6,7 @@ import Dashboard from "./components/utils/Dashboard";
 import Employee from "./components/Employee";
 import Category from "./components/Category";
 import Profile from "./components/Profile";
+import LeavePortal from "./components/LeavePortal";
 import AddCategory from "./components/AddCategory";
 import AddEmployee from "./components/AddEmployee";
 import EditEmployee from "./components/EditEmployee";
@@ -14,6 +15,7 @@ import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
 import { PrivateRoute } from "./components/PrivateRoute";
 import EditAdmin from "./components/EditAdmin";
+import Error from "./components/Error";
 
 
 function App() {
@@ -29,11 +31,13 @@ function App() {
         <Route path="/dashboard/employee" element={<Employee/>}/>
         <Route path="/dashboard/category" element={<Category/>}/>
         <Route path="/dashboard/profile" element={<Profile/>}/>
+        <Route path="/dashboard/leave_portal" element={<LeavePortal/>}/>
         <Route path="/dashboard/add_category" element={<AddCategory/>}/>
         <Route path="/dashboard/add_employee" element={<AddEmployee/>}/>
         <Route path="/dashboard/edit_employee/:id" element={<EditEmployee/>}/>
         <Route path="/dashboard/edit_admin/:id" element={<EditAdmin/>}/>
-      </Route>      
+      </Route>
+      <Route path="*" element={<Error/>} />      
     </Routes>
   )
 } 

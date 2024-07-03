@@ -80,6 +80,19 @@ const Dashboard = () => {
                   <span className="ms-2 d-none d-sm-inline">Profile</span>
                 </NavLink>
               </li>
+              <li className="w-100">
+                <NavLink
+                  to="/dashboard/leave_portal"
+                  className="nav-NavLink px-0 align-middle text-decoration-none"
+                  style={({ isActive }) => ({
+                    color: isActive ? "deeppink" : "white",
+                    opacity: isActive ? 1 : "",
+                  })}
+                >
+                  <i className="fs-4 bi bi-calendar-check  ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Leave Portal</span>
+                </NavLink>
+              </li>
               <li className="w-100" onClick={handleLogout}>
                 <NavLink className="nav-NavLink px-0 align-middle text-danger text-decoration-none">
                   <i className="fs-4 bi-power ms-2"></i>
