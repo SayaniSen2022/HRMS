@@ -14,6 +14,7 @@ import Start from "./components/Start";
 import EmployeeLogin from "./components/EmployeeLogin";
 import EmployeeDetail from "./components/EmployeeDetail";
 import { PrivateRoute } from "./components/PrivateRoute";
+import {EmployeePvtRoute} from "./components/EmployeePvtRoute"
 import EditAdmin from "./components/EditAdmin";
 import Error from "./components/Error";
 
@@ -25,7 +26,7 @@ function App() {
       <Route path="/" element={<Start/>}/>
       <Route path="/adminlogin" element={<Login/>}/>
       <Route path="/employee_login" element={<EmployeeLogin/>}/>
-      <Route path="/employee_detail/:id" element={<EmployeeDetail/>}/>
+      <Route path="/employee_detail/:id" element={<EmployeePvtRoute><EmployeeDetail/></EmployeePvtRoute>}/>
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>        
         <Route path="" element={<Home/>}/>
         <Route path="/dashboard/employee" element={<Employee/>}/>

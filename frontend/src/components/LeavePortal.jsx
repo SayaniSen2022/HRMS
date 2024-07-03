@@ -11,9 +11,17 @@ const LeavePortal = () => {
                     <th>Reject</th>
                 </tr>
                 </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td><button className="btn btn-success btn-sm">Approve</button></td>
+                        <td><button className="btn btn-danger btn-sm">Reject</button></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
+    
   )
 }
 
