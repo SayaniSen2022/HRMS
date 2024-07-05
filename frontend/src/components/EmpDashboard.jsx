@@ -38,7 +38,7 @@ const EmpDashboard = () => {
               </li>
               <li className="w-100">
                 <NavLink
-                  to="/emp_dashboard/leave_appl"
+                  to="/emp_dashboard/leave_dashboard"
                   className="nav-NavLink px-0 align-middle text-decoration-none"
                   style={({ isActive }) => ({
                     color: isActive ? "deeppink" : "white",

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./style.css";
+import "../style.css";
 
 const Employee = () => {
   const[employee, setEmployee] = useState([]);
