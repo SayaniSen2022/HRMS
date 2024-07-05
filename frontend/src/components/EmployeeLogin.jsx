@@ -20,7 +20,7 @@ const EmployeeLogin = () => {
         .then(result => {
             if(result.data.loginStatus){
                 localStorage.setItem("valid", true)
-                navigate('/emp_dashboard/employee_detail/'+result.data.id);
+                navigate('/emp_dashboard/detail/'+result.data.id);
             }else{
                 setError(result.data.Error)
             }
