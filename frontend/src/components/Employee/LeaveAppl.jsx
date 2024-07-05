@@ -1,19 +1,12 @@
-// import { Link } from "react-router-dom";
 
-const LeaveDashboard = () => {
+const LeaveAppl = () => {
   return (
-    <div className="d-flex justify-content-start">
-            {/* <h1 className="text-center mt-3">LeaveDashboard</h1>
-            <Link to="/emp_dashboard/leave_appl" className="btn btn-info btn-sm ms-4">
-              Apply for Leaves
-            </Link> */}
-
-      <div className="border rounded w-25 ms-2 mt-2 p-3">
-        <div className="text-center mb-3">
-            <div className="fs-4">Leave Application</div>
+    <div>
+        <div className="text-center mt-3">
+            <h2>Leave Application</h2>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-            <form className="w-100" >
+            <form className="ms-4 mt-3 w-25 border border-subtle p-3 rounded" >
                 <div className="mb-3">
                     <label htmlFor="from-date" className="ms-2 text-primary">Leave From</label>
                     <input type="date" className="form-control" id="from-date" aria-describedby="emailHelp"/>
@@ -41,41 +34,9 @@ const LeaveDashboard = () => {
                 </div>            
             </form>
         </div>
-      </div>
-      <div className="mt-4 mx-5 w-75">
-        <div className="text-center mb-3">
-          <div className="fs-4">Leave Information</div>
-        </div>
-        <table className="table table-hover table-striped table-sm border">
-          <thead className="text-center">
-            <tr>
-              <th>From Date</th>
-              <th>To Date</th>
-              <th>Total Leaves</th>
-              <th>Type</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            <tr>
-              <td>01.01.2024</td>
-              <td>05.01.2024</td>
-              <td>5</td>
-              <td>Paid Leave</td>
-              <td>Approved</td>
-            </tr>
-            <tr>              
-              <td>03.03.2024</td>
-              <td>04.03.2024</td>
-              <td>1</td>
-              <td>Casual Leave</td>
-              <td>Rejected</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-  );
-};
 
-export default LeaveDashboard;
+
+  )
+}
+export default LeaveAppl
