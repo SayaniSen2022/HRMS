@@ -6,6 +6,13 @@ const LeaveDashboard = () => {
   const {id} = useParams();
   const[admin, setAdmin] = useState([]);
   const[leaveType, setLeaveType] = useState([]);
+  const[leave, setLeave] = useState({
+    fromDate: new Date(),
+    toDate: new Date(),
+    type: "",
+    adminId: "",
+    leaveInfo: ""
+  });
 
   useEffect(()=>{
     axios.get('http://localhost:3000/auth/admin')
@@ -30,14 +37,35 @@ const LeaveDashboard = () => {
   },[])
 
 
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('fromDate', leave.fromDate);
+    formData.append('toDate', leave.toDate);
+    formData.append('type', leave.leaveType);
+    formData.append('adminId', leave.adminId);
+    formData.append('leaveInfo', leave.leaveInfo);
+
+    axios.post("http://localhost:3000/employee/emp_dashboard/leave_dashboard", formData)
+    .then(result => {
+      if(result.data.Status){
+        navigate('/emp_dashboard')
+    }else{
+        alert(result.data.Error)
+    }
+    })
+    .catch(err => console.log(err));
+
+  }
+
   return (
     <div className="d-flex justify-content-start">
-      <div className="border rounded w-25 ms-2 mt-2 p-3">
+      <div className="border rounded w-50 h-100 ms-2 mt-2 p-3">
         <div className="text-center mb-3">
             <div className="fs-4">Leave Application</div>
         </div>
         <div className="d-flex justify-content-center align-items-center">
-            <form className="w-100" >
+            <form className="w-100" onSubmit={handleSubmit} >
                 <div className="mb-3">
                     <label htmlFor="from-date" className="ms-2 text-primary">Leave From</label>
                     <input type="date" className="form-control" id="from-date" aria-describedby="emailHelp"/>
