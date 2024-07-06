@@ -41,6 +41,15 @@ router.get('/detail/:id', (req, res) => {
   })
 })
 
+router.get("/type_of_leave", (req, res) => {
+  const sql = "SELECT * FROM `tbl_leave_type`";
+
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
 router.get('/logout', (req, res) => {
   res.clearCookie('token');
   return res.json({Status: true})

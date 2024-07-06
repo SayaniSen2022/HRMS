@@ -40,6 +40,14 @@ router.get("/category", (req, res) => {
     return res.json({ Status: true, Result: result });
   });
 });
+router.get("/admin", (req, res) => {
+  const sql = "SELECT * FROM `admin`";
+
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
 
 router.post("/add_category", (req, res) => {
   const sql = "INSERT INTO `category` (`name`) VALUES (?)";

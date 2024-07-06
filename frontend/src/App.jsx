@@ -18,7 +18,6 @@ import { PrivateRoute } from "./components/Admin/PrivateRoute";
 import {EmployeePvtRoute} from "./components/Employee/EmployeePvtRoute"
 import EmpDashboard from "./components/EmpDashboard";
 import EditAdmin from "./components/Admin/EditAdmin";
-import LeaveAppl from "./components/Employee/LeaveAppl";
 import Error from "./components/Error";
 
 
@@ -33,7 +32,6 @@ function App() {
       <Route path="/emp_dashboard" element={<EmployeePvtRoute><EmpDashboard/></EmployeePvtRoute>}>
         <Route path="/emp_dashboard/detail/:id" element={<EmployeeDetail/>}/>
         <Route path="/emp_dashboard/leave_dashboard" element={<LeaveDashboard/>}/>
-        <Route path="/emp_dashboard/leave_appl" element={<LeaveAppl/>}/>
       </Route>
       
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}>        

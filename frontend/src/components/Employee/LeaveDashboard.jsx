@@ -1,13 +1,37 @@
-// import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const LeaveDashboard = () => {
+  const {id} = useParams();
+  const[admin, setAdmin] = useState([]);
+  const[leaveType, setLeaveType] = useState([]);
+
+  useEffect(()=>{
+    axios.get('http://localhost:3000/auth/admin')
+    .then((result) => {
+      if (result.data.Status) {
+        setAdmin(result.data.Result);
+      } else {
+        alert(result.data.Error);
+      }
+    } )
+    .catch((err) => console.log(err));
+
+    axios.get('http://localhost:3000/employee/type_of_leave')
+    .then((result) => {
+      if (result.data.Status) {
+        setLeaveType(result.data.Result);
+      } else {
+        alert(result.data.Error);
+      }
+    } )
+    .catch((err) => console.log(err));
+  },[])
+
+
   return (
     <div className="d-flex justify-content-start">
-            {/* <h1 className="text-center mt-3">LeaveDashboard</h1>
-            <Link to="/emp_dashboard/leave_appl" className="btn btn-info btn-sm ms-4">
-              Apply for Leaves
-            </Link> */}
-
       <div className="border rounded w-25 ms-2 mt-2 p-3">
         <div className="text-center mb-3">
             <div className="fs-4">Leave Application</div>
@@ -26,12 +50,30 @@ const LeaveDashboard = () => {
                     <label htmlFor="type_of_leave" className="ms-2 text-primary">Type of Leave</label>
                     <select name="type_of_leave" id="type_of_leave" className="form-select">
                         <option>Select</option>
-                        <option>Paid Leave</option>
-                        <option>Casual Leave</option>
-                        <option>Sick Leave</option>
-                        <option>Compensatory Leave</option>
+                        {leaveType.map((ltype) => {
+                              return (
+                                <option key={ltype.leaveId} value={ltype.leaveId}>
+                                  {ltype.type}
+                                </option>
+                              );
+                            })}
                     </select>
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="admin" className="ms-2 text-primary">To be Approved by</label>
+                    <select name="admin" id="admin" className="form-select">
+                        <option>Select Admin</option>
+                        {admin.map((a) => {
+                              return (
+                                <option key={a.id} value={a.id}>
+                                  {a.name}
+                                </option>
+                              );
+                            })}
+                    </select>
+                    
+                </div>
+
                 <div className="mb-3">
                     <label htmlFor="reason" className="ms-2 text-primary">Reason</label>
                     <textarea className="form-control" id="reason" aria-describedby="emailHelp" style={{height: '100px'}} ></textarea>
