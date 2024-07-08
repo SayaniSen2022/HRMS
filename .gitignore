@@ -1,1 +1,5 @@
-backend/.env
+# Ignore node_modules directory
+node_modules/
+
+# Ignore .env file
+.env
