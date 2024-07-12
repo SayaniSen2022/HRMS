@@ -1,18 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const LeaveDashboard = () => {
-  const {id} = useParams();
+  // const {id} = useParams();
   const[admin, setAdmin] = useState([]);
   const[leaveType, setLeaveType] = useState([]);
-  const[leave, setLeave] = useState({
-    fromDate: new Date(),
-    toDate: new Date(),
-    type: "",
-    adminId: "",
-    leaveInfo: ""
-  });
+  const[fromDate, setFromDate] = useState('');
+  const[toDate, setToDate] = useState('');
+  const[leaveInfo, setLeaveInfo] = useState('');
+  const[adminId, setAdminId] = useState(0);
+  const[type, setType] = useState('');
+
 
   useEffect(()=>{
     axios.get('http://localhost:3000/auth/admin')
@@ -39,22 +38,25 @@ const LeaveDashboard = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('fromDate', leave.fromDate);
-    formData.append('toDate', leave.toDate);
-    formData.append('type', leave.leaveType);
-    formData.append('adminId', leave.adminId);
-    formData.append('leaveInfo', leave.leaveInfo);
+    
+    const leaveReuest = {
+      fromDate,
+      toDate,
+      leaveInfo,
+      adminId,
+      type,
+    };
 
-    axios.post("http://localhost:3000/employee/emp_dashboard/leave_dashboard", formData)
-    .then(result => {
-      if(result.data.Status){
-        navigate('/emp_dashboard')
-    }else{
-        alert(result.data.Error)
-    }
+    axios.post("http://localhost:3000/employee/emp_dashboard/leave_dashboard", leaveReuest)
+    .then(response =>{
+      alert("Form submitted Successfully");
+      setFromDate('');
+      setToDate('');
+      setLeaveInfo('');
+      setAdminId('');
+      setType('');
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log("Problem"));
 
   }
 
@@ -68,15 +70,15 @@ const LeaveDashboard = () => {
             <form className="w-100" onSubmit={handleSubmit} >
                 <div className="mb-3">
                     <label htmlFor="from-date" className="ms-2 text-primary">Leave From</label>
-                    <input type="date" className="form-control" id="from-date" aria-describedby="emailHelp"/>
+                    <input type="date" className="form-control" id="from-date" value={fromDate} onChange={(e)=>setFromDate(e.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="to-date" className="ms-2 text-primary">Leave To</label>
-                    <input type="date" className="form-control" id="to-date" aria-describedby="emailHelp"/>
+                    <input type="date" className="form-control" id="to-date" value={toDate} onChange={(e)=>setToDate(e.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="type_of_leave" className="ms-2 text-primary">Type of Leave</label>
-                    <select name="type_of_leave" id="type_of_leave" className="form-select">
+                    <select name="type_of_leave" id="type_of_leave" className="form-select" value={type} onChange={(e)=>setType(e.target.value)}>
                         <option>Select</option>
                         {leaveType.map((ltype) => {
                               return (
@@ -89,7 +91,7 @@ const LeaveDashboard = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="admin" className="ms-2 text-primary">To be Approved by</label>
-                    <select name="admin" id="admin" className="form-select">
+                    <select name="admin" id="admin" className="form-select" value={adminId} onChange={(e)=>setAdminId(e.target.value)}>
                         <option>Select Admin</option>
                         {admin.map((a) => {
                               return (
@@ -98,13 +100,12 @@ const LeaveDashboard = () => {
                                 </option>
                               );
                             })}
-                    </select>
-                    
+                    </select>                    
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="reason" className="ms-2 text-primary">Reason</label>
-                    <textarea className="form-control" id="reason" aria-describedby="emailHelp" style={{height: '100px'}} ></textarea>
+                    <textarea className="form-control" id="reason" style={{height: '100px'}} value={leaveInfo} onChange={(e)=>setLeaveInfo(e.target.value)} ></textarea>
                 </div>
                 <div className="d-flex justify-content-center">
                 <button className="btn btn-primary">Submit</button>

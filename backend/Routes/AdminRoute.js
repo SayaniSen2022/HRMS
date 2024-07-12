@@ -208,6 +208,16 @@ router.get('/admin/:id', (req, res) => {
   })
 }) */
 
+  router.get('/leave_portal', (req, res) => {
+    const sql = `SELECT (fromDate, toDate, leaveInfo, type) FROM tbl_test_leave`;
+    const {fromDate, toDate, leaveInfo, type} = req.body;
+
+    con.query(sql, [fromDate, toDate, leaveInfo, type], (err, result)=>{
+      if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+  })
+
 router.get('/logout', (req, res)=>{
   res.clearCookie('token');
   return res.json({Status: true})

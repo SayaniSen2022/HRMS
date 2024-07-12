@@ -52,17 +52,11 @@ router.get("/type_of_leave", (req, res) => {
 
 router.post("/emp_dashboard/leave_dashboard", (req, res) => {
   const sql =
-    `INSERT INTO tbl_leave_info  (fromDate, toDate, leaveType, leaveInfo, adminId)  VALUES (?)`;
+    `INSERT INTO tbl_test_leave (fromDate, toDate, leaveInfo, adminId, type) VALUES (?, ?, ?, ?, ?)`;
+
+    const {fromDate, toDate, leaveInfo, adminId, type} = req.body;
   
-    if (err) return res.json({ Status: false, Error: "Query Error" });
-    const values = [
-      req.body.fromDate,
-      req.body.toDate,
-      req.body.leaveType,
-      req.body.leaveInfo,
-      req.file.adminId,
-    ];
-    con.query(sql, [values], (err, result)=>{
+    con.query(sql, [fromDate, toDate, leaveInfo, adminId, type], (err, result)=>{
         if (err) return res.json({ Status: false, Error: err });
         return res.json({ Status: true });
     })
