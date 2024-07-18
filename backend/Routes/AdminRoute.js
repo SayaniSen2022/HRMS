@@ -209,10 +209,10 @@ router.get('/admin/:id', (req, res) => {
 }) */
 
   router.get('/leave_portal', (req, res) => {
-    const sql = `SELECT (fromDate, toDate, leaveInfo, type) FROM tbl_test_leave`;
-    const {fromDate, toDate, leaveInfo, type} = req.body;
+    const sql = `SELECT (fromDate, toDate, type, leaveInfo) FROM tbl_leave_info`;
+    const {fromDate, toDate, type, leaveInfo} = req.body;
 
-    con.query(sql, [fromDate, toDate, leaveInfo, type], (err, result)=>{
+    con.query(sql, [fromDate, toDate, type, leaveInfo], (err, result)=>{
       if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })

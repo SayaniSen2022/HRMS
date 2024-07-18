@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useToast } from '@chakra-ui/react'
 // import { useParams } from "react-router-dom";
 
 const LeaveDashboard = () => {
@@ -12,6 +13,7 @@ const LeaveDashboard = () => {
   const[adminId, setAdminId] = useState(0);
   const[type, setType] = useState('');
 
+  const toast = useToast()
 
   useEffect(()=>{
     axios.get('http://localhost:3000/auth/admin')
@@ -49,7 +51,13 @@ const LeaveDashboard = () => {
 
     axios.post("http://localhost:3000/employee/emp_dashboard/leave_dashboard", leaveReuest)
     .then(response =>{
-      alert("Form submitted Successfully");
+      toast({
+        title: 'Submitted Successfully',
+        description: "Your leave request has been submitted.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
       setFromDate('');
       setToDate('');
       setLeaveInfo('');
