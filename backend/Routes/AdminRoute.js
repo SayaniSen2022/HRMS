@@ -208,15 +208,26 @@ router.get('/admin/:id', (req, res) => {
   })
 }) */
 
-  router.get('/leave_portal', (req, res) => {
-    const sql = `SELECT (fromDate, toDate, type, leaveInfo) FROM tbl_leave_info`;
-    const {fromDate, toDate, type, leaveInfo} = req.body;
+  router.get('/get-leaves', (req, res) => {
+    const sql = `SELECT info.fromDate, info.toDate, info.leaveInfo, type.type FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
+    type.leaveId = info.leaveTypeId WHERE info.adminId = 2`;
+    const {fromDate, toDate, leaveInfo, type} = req.body;
 
     con.query(sql, [fromDate, toDate, type, leaveInfo], (err, result)=>{
+      console.log(err);
       if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
   })
+
+  router.get('/get-leave-status', (req, res) => {
+    const sql = `SELECT status FROM tbl_leave_status`;
+    con.query(sql, (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query Error" });
+      return res.json({ Status: true, Result: result });
+    });
+  })
+
 
 router.get('/logout', (req, res)=>{
   res.clearCookie('token');

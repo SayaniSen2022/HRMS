@@ -1,57 +1,96 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const LeavePortal = () => {
-    const [leaveDetails, setLeaveDetails] = useState([]);
+  const [leaveDetails, setLeaveDetails] = useState([]);
+  const [leaveStatDetails, setLeaveStatDetails] = useState([]);
 
-    useEffect(()=>{
-        axios.get('http://localhost:3000/auth/leave_portal')
-        .then(result => {
-            if(result.data.Status){
-                setLeaveDetails(result.data.Result)
-              }else{
-                alert(result.data.Error)
-              }
-        })
-        .catch(err => console.log(err))
-    },[])
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/auth/get-leaves")
+      .then((result) => {
+        if (result.data.Status) {
+          setLeaveDetails(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .get("http://localhost:3000/auth/get-leave-status")
+      .then((result) => {
+        if (result.data.Status) {
+          console.log(result.data.Result);
+          setLeaveStatDetails(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const updateLeave = (id, status) => {
+    axios
+      .put("http://localhost:3000/employee/update-leave", { id, status })
+      .then((res) => {
+        if (res.data.Status) {
+          // Optionally update leaveDetails state to reflect the change
+          setLeaveDetails((prevLeaveDetails) =>
+            prevLeaveDetails.map((ld) =>
+              ld.id === id ? { ...ld, status } : ld
+            )
+          );
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="px-5 mt-3">
-        <div className="mt-3">
-            <table className='table'>
-                <thead className="text-center">
-                <tr>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Reason</th>
-                    <th>Type of Leave</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody className="text-center">
-                    {
-                        leaveDetails.map(ld => (
-                            <tr key={ld.id}>
-                            <td>{ld.fromDate}</td>
-                            <td>{ld.toDate}</td>
-                            <td>{ld.leaveInfo}</td>
-                            <td>{ld.type}</td>
-                            <td>
-                                <button className="btn btn-success btn-sm me-2">Approve</button>
-                                <button className="btn btn-danger btn-sm">Reject</button>
-                            </td>
-                        </tr>
-
-                        ))
-                    }
-
-                </tbody>
-            </table>
-        </div>
+      <div className="mt-3">
+        <table className="table">
+          <thead className="text-center">
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+              <th>Type of Leave</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            {leaveDetails.map((ld) => (
+              <tr key={ld.id}>
+                <td>{ld.fromDate}</td>
+                <td>{ld.toDate}</td>
+                <td>{ld.leaveInfo}</td>
+                <td>{ld.type}</td>
+                <td>{ld.status}</td>
+                <td>
+                  <button
+                    className="btn btn-success btn-sm me-2"
+                    onClick={() => updateLeave(ld.id, "approved")}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => updateLeave(ld.id, "rejected")}
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-    
-  )
-}
+  );
+};
 
-export default LeavePortal
+export default LeavePortal;

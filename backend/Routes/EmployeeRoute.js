@@ -50,9 +50,9 @@ router.get("/type_of_leave", (req, res) => {
   });
 });
 
-router.post("/emp_dashboard/leave_dashboard", (req, res) => {
+router.post("/insert-leave", (req, res) => {
   const sql =
-    `INSERT INTO tbl_leave_info (fromDate, toDate, type, leaveInfo, adminId) VALUES (?, ?, ?, ?, ?)`;
+    `INSERT INTO tbl_leave_info (fromDate, toDate, leaveTypeId, leaveInfo, adminId) VALUES (?, ?, ?, ?, ?)`;
 
     const {fromDate, toDate, type, leaveInfo, adminId} = req.body;
   
@@ -61,6 +61,18 @@ router.post("/emp_dashboard/leave_dashboard", (req, res) => {
         return res.json({ Status: true });
     })
   });
+
+  router.put("/update-leave", (req, res) => {
+    const sql =
+      `UPDATE tbl_leave_info SET statusId = ? WHERE id = ?`;
+  
+      const {id, status} = req.body;
+    
+      con.query(sql, [id, status], (err, result)=>{
+          if (err) return res.json({ Status: false, Error: err });
+          return res.json({ Status: true });
+      })
+    });
 
 router.get('/logout', (req, res) => {
   res.clearCookie('token');

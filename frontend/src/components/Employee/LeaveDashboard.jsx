@@ -41,7 +41,7 @@ const LeaveDashboard = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
     
-    const leaveReuest = {
+    const leaveRequest = {
       fromDate,
       toDate,
       leaveInfo,
@@ -49,7 +49,7 @@ const LeaveDashboard = () => {
       type,
     };
 
-    axios.post("http://localhost:3000/employee/emp_dashboard/leave_dashboard", leaveReuest)
+    axios.post("http://localhost:3000/employee/insert-leave", leaveRequest)
     .then(response =>{
       toast({
         title: 'Submitted Successfully',
