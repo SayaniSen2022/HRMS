@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 const LeavePortal = () => {
   const [leaveDetails, setLeaveDetails] = useState([]);
@@ -31,21 +32,20 @@ const LeavePortal = () => {
   }, []);
 
   const updateLeave = (id, status) => {
-    axios
-      .put("http://localhost:3000/employee/update-leave", { id, status })
-      .then((res) => {
-        if (res.data.Status) {
-          // Optionally update leaveDetails state to reflect the change
-          setLeaveDetails((prevLeaveDetails) =>
-            prevLeaveDetails.map((ld) =>
-              ld.id === id ? { ...ld, status } : ld
-            )
-          );
-        } else {
-          alert(res.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+      axios
+        .put("http://localhost:3000/employee/update-leave", { id, status })
+        .then((res) => {
+          if (res.data.Status) {
+            setLeaveDetails((prevLeaveDetails) =>
+              prevLeaveDetails.map((ld) =>
+                ld.id === id ? { ...ld, status } : ld
+              )
+            );
+          } else {
+            alert(res.data.Error);
+          }
+        })
+        .catch((err) => console.log(err));
   };
 
   return (
@@ -65,15 +65,15 @@ const LeavePortal = () => {
           <tbody className="text-center">
             {leaveDetails.map((ld) => (
               <tr key={ld.id}>
-                <td>{ld.fromDate}</td>
-                <td>{ld.toDate}</td>
+                <td>{format(ld.fromDate, "dd-MM-yyyy")}</td>
+                <td>{format(ld.toDate, "dd-MM-yyyy")}</td>
                 <td>{ld.leaveInfo}</td>
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>
                 <td>
                   <button
                     className="btn btn-success btn-sm me-2"
-                    onClick={() => updateLeave(ld.id, "approved")}
+                    onClick={() => updateLeave(ld.id,"approved")}
                   >
                     Approve
                   </button>

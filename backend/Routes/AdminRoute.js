@@ -211,6 +211,7 @@ router.get('/admin/:id', (req, res) => {
   router.get('/get-leaves', (req, res) => {
     const sql = `SELECT info.fromDate, info.toDate, info.leaveInfo, type.type FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
     type.leaveId = info.leaveTypeId WHERE info.adminId = 2`;
+    // const sql = `SELECT fromDate, toDate, type, leaveInfo FROM tbl_leave_info WHERE adminId = 2`;
     const {fromDate, toDate, leaveInfo, type} = req.body;
 
     con.query(sql, [fromDate, toDate, type, leaveInfo], (err, result)=>{
