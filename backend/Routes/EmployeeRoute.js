@@ -62,17 +62,17 @@ router.post("/insert-leave", (req, res) => {
     })
   });
 
-  router.put("/update-leave", (req, res) => {
-    const sql =
-      `UPDATE tbl_leave_info SET statusId = ? WHERE id = ?`;
+  // router.put("/update-leave", (req, res) => {
+  //   const sql =
+  //     `UPDATE tbl_leave_info SET statusId = ? WHERE id = ?`;
   
-      const {id, status} = req.body;
+  //     const {id, status} = req.body;
     
-      con.query(sql, [id, status], (err, result)=>{
-          if (err) return res.json({ Status: false, Error: err });
-          return res.json({ Status: true });
-      })
-    });
+  //     con.query(sql, [id, status], (err, result)=>{
+  //         if (err) return result.json({ Status: false, Error: err });
+  //         return res.json({ Status: true });
+  //     })
+  //   });
 
 router.get('/logout', (req, res) => {
   res.clearCookie('token');

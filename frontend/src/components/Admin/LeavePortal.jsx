@@ -33,7 +33,7 @@ const LeavePortal = () => {
 
   const updateLeave = (id, status) => {
       axios
-        .put("http://localhost:3000/employee/update-leave", { id, status })
+        .put("http://localhost:3000/auth/update-leave", { id, status })
         .then((res) => {
           if (res.data.Status) {
             setLeaveDetails((prevLeaveDetails) =>
@@ -71,18 +71,10 @@ const LeavePortal = () => {
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>
                 <td>
-                  <button
-                    className="btn btn-success btn-sm me-2"
-                    onClick={() => updateLeave(ld.id,"approved")}
-                  >
+                  <button className="btn btn-success btn-sm me-2" onClick={()=>updateLeave(ld.id, ld.status)}>
                     Approve
                   </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => updateLeave(ld.id, "rejected")}
-                  >
-                    Reject
-                  </button>
+                  <button className="btn btn-danger btn-sm">Reject</button>
                 </td>
               </tr>
             ))}

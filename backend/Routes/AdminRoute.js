@@ -209,12 +209,12 @@ router.get('/admin/:id', (req, res) => {
 }) */
 
   router.get('/get-leaves', (req, res) => {
-    const sql = `SELECT info.fromDate, info.toDate, info.leaveInfo, type.type FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
+    const sql = `SELECT info.fromDate, info.toDate, info.leaveInfo, info.status, type.type FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
     type.leaveId = info.leaveTypeId WHERE info.adminId = 2`;
     // const sql = `SELECT fromDate, toDate, type, leaveInfo FROM tbl_leave_info WHERE adminId = 2`;
-    const {fromDate, toDate, leaveInfo, type} = req.body;
+    const {fromDate, toDate, leaveInfo, status, type} = req.body;
 
-    con.query(sql, [fromDate, toDate, type, leaveInfo], (err, result)=>{
+    con.query(sql, [fromDate, toDate, type, status, leaveInfo], (err, result)=>{
       console.log(err);
       if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
@@ -228,6 +228,20 @@ router.get('/admin/:id', (req, res) => {
       return res.json({ Status: true, Result: result });
     });
   })
+
+  router.put('/update-leave', (req, res) => {
+    const sql = `UPDATE tbl_leave_info SET status = ? WHERE id = ?`;
+  
+    // Destructure id and status from req.body, not res.body
+    const { id, status } = req.body;
+  
+    // Order of parameters should match the placeholders in the SQL query
+    con.query(sql, [status, id], (err, result) => {
+      if (err) return res.json({ Status: false, Error: "Query Error" });
+      return res.json({ Status: true, Result: result });
+    });
+  });
+  
 
 
 router.get('/logout', (req, res)=>{
