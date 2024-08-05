@@ -6,6 +6,11 @@ const LeavePortal = () => {
   const [leaveDetails, setLeaveDetails] = useState([]);
   const [leaveStatDetails, setLeaveStatDetails] = useState([]);
 
+  const LEAVE_STATUS = {
+    Approved : 1,
+    Rejected : 2
+}
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/get-leaves")
@@ -24,6 +29,7 @@ const LeavePortal = () => {
         if (result.data.Status) {
           console.log(result.data.Result);
           setLeaveStatDetails(result.data.Result);
+          // console.log(leaveStatDetails)
         } else {
           alert(result.data.Error);
         }
@@ -31,21 +37,22 @@ const LeavePortal = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const updateLeave = (id, status) => {
-      axios
-        .put("http://localhost:3000/auth/update-leave", { id, status })
-        .then((res) => {
-          if (res.data.Status) {
-            setLeaveDetails((prevLeaveDetails) =>
-              prevLeaveDetails.map((ld) =>
-                ld.id === id ? { ...ld, status } : ld
-              )
-            );
-          } else {
-            alert(res.data.Error);
-          }
-        })
-        .catch((err) => console.log(err));
+  const updateLeave = (leaveId, statusId) => {
+    // console.log(row, status)
+    axios
+      .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
+      .then((res) => {
+        if (res.data.Status) {
+          // setLeaveDetails((prevLeaveDetails) =>
+          //   prevLeaveDetails.map((ld) =>
+          //     ld.id === leaveId ? { ...ld,  } : ld
+          //   )
+          // );
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -71,10 +78,10 @@ const LeavePortal = () => {
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>
                 <td>
-                  <button className="btn btn-success btn-sm me-2" onClick={()=>updateLeave(ld.id, ld.status)}>
+                  <button className="btn btn-success btn-sm me-2" onClick={() => updateLeave(ld.id, LEAVE_STATUS.Approved)}>
                     Approve
                   </button>
-                  <button className="btn btn-danger btn-sm">Reject</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => updateLeave(ld.id, LEAVE_STATUS.Rejected)}>Reject</button>
                 </td>
               </tr>
             ))}
