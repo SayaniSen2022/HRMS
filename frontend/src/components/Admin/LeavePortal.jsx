@@ -37,17 +37,37 @@ const LeavePortal = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const updateLeave = (leaveId, statusId) => {
+  const approveLeave = (leaveId, statusId) => {
     // console.log(row, status)
+    console.log(leaveDetails)
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {
         if (res.data.Status) {
-          // setLeaveDetails((prevLeaveDetails) =>
-          //   prevLeaveDetails.map((ld) =>
-          //     ld.id === leaveId ? { ...ld,  } : ld
-          //   )
-          // );
+          setLeaveDetails((prevLeaveDetails) =>
+            prevLeaveDetails.map((ld) =>
+              ld.id === leaveId ? { ...ld, status: "approved" } : ld
+            )
+          );
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const rejectLeave = (leaveId, statusId) => {
+    // console.log(row, status)
+    console.log(leaveDetails)
+    axios
+      .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
+      .then((res) => {
+        if (res.data.Status) {
+          setLeaveDetails((prevLeaveDetails) =>
+            prevLeaveDetails.map((ld) =>
+              ld.id === leaveId ? { ...ld, status: "rejected" } : ld
+            )
+          );
         } else {
           alert(res.data.Error);
         }
@@ -78,10 +98,10 @@ const LeavePortal = () => {
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>
                 <td>
-                  <button className="btn btn-success btn-sm me-2" onClick={() => updateLeave(ld.id, LEAVE_STATUS.Approved)}>
+                  <button className="btn btn-success btn-sm me-2" onClick={() => approveLeave(ld.id, LEAVE_STATUS.Approved)}>
                     Approve
                   </button>
-                  <button className="btn btn-danger btn-sm" onClick={() => updateLeave(ld.id, LEAVE_STATUS.Rejected)}>Reject</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => rejectLeave(ld.id, LEAVE_STATUS.Rejected)}>Reject</button>
                 </td>
               </tr>
             ))}
