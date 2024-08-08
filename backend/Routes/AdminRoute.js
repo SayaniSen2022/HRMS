@@ -209,12 +209,12 @@ router.get('/admin/:id', (req, res) => {
 }) */
 
   router.get('/get-leaves', (req, res) => {
-    const sql = `SELECT info.id, info.fromDate, info.toDate, info.leaveInfo, type.type, status.status FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
-    type.leaveId = info.leaveTypeId INNER JOIN tbl_leave_status AS status ON info.statusId = status.statusId WHERE info.adminId = 2`;
+    const sql = `SELECT info.id, employee.name, info.fromDate, info.toDate, info.leaveInfo, type.type, status.status FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
+    type.leaveId = info.leaveTypeId INNER JOIN tbl_leave_status AS status ON info.statusId = status.statusId INNER JOIN employee AS employee ON info.empId = employee.id WHERE info.adminId = 2`;
     // const sql = `SELECT fromDate, toDate, type, leaveInfo FROM tbl_leave_info WHERE adminId = 2`;
-    const {fromDate, toDate, leaveInfo, status, type} = req.body;
+    const {name, fromDate, toDate, leaveInfo, status, type} = req.body;
 
-    con.query(sql, [fromDate, toDate, type, status, leaveInfo], (err, result)=>{
+    con.query(sql, [name, fromDate, toDate, type, status, leaveInfo], (err, result)=>{
       console.log(err);
       if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})

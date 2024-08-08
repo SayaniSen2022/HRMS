@@ -39,7 +39,7 @@ const LeavePortal = () => {
 
   const approveLeave = (leaveId, statusId) => {
     // console.log(row, status)
-    // console.log(leaveDetails)
+    console.log(leaveDetails)
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {
@@ -81,6 +81,7 @@ const LeavePortal = () => {
         <table className="table">
           <thead className="text-center">
             <tr>
+              <th>Employee Name</th>
               <th>From</th>
               <th>To</th>
               <th>Reason</th>
@@ -92,6 +93,7 @@ const LeavePortal = () => {
           <tbody className="text-center">
             {leaveDetails.map((ld) => (
               <tr key={ld.id}>
+                <td>{ld.name}</td>
                 <td>{format(ld.fromDate, "dd-MM-yyyy")}</td>
                 <td>{format(ld.toDate, "dd-MM-yyyy")}</td>
                 <td>{ld.leaveInfo}</td>
