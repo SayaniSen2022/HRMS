@@ -50,13 +50,14 @@ router.get("/type_of_leave", (req, res) => {
   });
 });
 
-router.post("/insert-leave", (req, res) => {
+router.post("/insert-leave/:id", (req, res) => {
+  const id = req.params.id;
   const sql =
-    `INSERT INTO tbl_leave_info (fromDate, toDate, leaveTypeId, leaveInfo, adminId) VALUES (?, ?, ?, ?, ?)`;
+    `INSERT INTO tbl_leave_info (empId, fromDate, toDate, leaveTypeId, leaveInfo, adminId) VALUES (?, ?, ?, ?, ?, ?)`;
 
     const {fromDate, toDate, type, leaveInfo, adminId} = req.body;
   
-    con.query(sql, [fromDate, toDate, type, leaveInfo, adminId], (err, result)=>{
+    con.query(sql, [id, fromDate, toDate, type, leaveInfo, adminId], (err, result)=>{
         if (err) return res.json({ Status: false, Error: err });
         return res.json({ Status: true });
     })

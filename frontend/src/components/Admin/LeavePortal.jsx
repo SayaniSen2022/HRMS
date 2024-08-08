@@ -39,7 +39,7 @@ const LeavePortal = () => {
 
   const approveLeave = (leaveId, statusId) => {
     // console.log(row, status)
-    console.log(leaveDetails)
+    // console.log(leaveDetails)
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {
@@ -58,7 +58,7 @@ const LeavePortal = () => {
 
   const rejectLeave = (leaveId, statusId) => {
     // console.log(row, status)
-    console.log(leaveDetails)
+    // console.log(leaveDetails)
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {

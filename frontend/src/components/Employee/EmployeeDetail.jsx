@@ -13,6 +13,7 @@ const EmployeeDetail = () => {
         axios.get('http://localhost:3000/employee/detail/'+id)
         .then(result => {
             setEmployee(result.data[0]);
+            localStorage.setItem("loggedInUser", JSON.stringify(result.data[0])) //storing the logged-in user data
         })
         .catch(err=>console.log(err))
     },[])
