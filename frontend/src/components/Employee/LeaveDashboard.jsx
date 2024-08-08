@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
+import { format } from "date-fns";
 
 const LeaveDashboard = () => {
   const [admin, setAdmin] = useState([]);
@@ -10,7 +11,8 @@ const LeaveDashboard = () => {
   const [leaveInfo, setLeaveInfo] = useState("");
   const [adminId, setAdminId] = useState(0);
   const [type, setType] = useState("");
-  const[user, setUser] = useState(JSON.parse(localStorage.getItem("loggedInUser")));
+  const [leaveDetails, setLeaveDetails] = useState([]);
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
   console.log(user)
 
   const toast = useToast();
@@ -37,6 +39,18 @@ const LeaveDashboard = () => {
         }
       })
       .catch((err) => console.log(err));
+
+      axios
+      .get("http://localhost:3000/employee/get-leave-details/"+user.id)
+      .then((result) => {
+        if (result.data.Status) {
+          setLeaveDetails(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+
   }, []);
 
   const handleSubmit = (e) => {
@@ -170,27 +184,20 @@ const LeaveDashboard = () => {
           <thead className="text-center">
             <tr>
               <th>From Date</th>
-              <th>To Date</th>
-              <th>Total Leaves</th>
+              <th>To Date</th>              
               <th>Type</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-center">
-            <tr>
-              <td>01.01.2024</td>
-              <td>05.01.2024</td>
-              <td>5</td>
-              <td>Paid Leave</td>
-              <td>Approved</td>
-            </tr>
-            <tr>
-              <td>03.03.2024</td>
-              <td>04.03.2024</td>
-              <td>1</td>
-              <td>Casual Leave</td>
-              <td>Rejected</td>
-            </tr>
+            {leaveDetails.map((ld) => (
+              <tr key={ld.id}>                
+                <td>{format(ld.fromDate, "dd-MM-yyyy")}</td>
+                <td>{format(ld.toDate, "dd-MM-yyyy")}</td>                
+                <td>{ld.type}</td>
+                <td>{ld.status}</td>                
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
