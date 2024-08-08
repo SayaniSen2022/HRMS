@@ -184,7 +184,8 @@ const LeaveDashboard = () => {
           <thead className="text-center">
             <tr>
               <th>From Date</th>
-              <th>To Date</th>              
+              <th>To Date</th>   
+              <th>Reason</th>           
               <th>Type</th>
               <th>Status</th>
             </tr>
@@ -193,7 +194,8 @@ const LeaveDashboard = () => {
             {leaveDetails.map((ld) => (
               <tr key={ld.id}>                
                 <td>{format(ld.fromDate, "dd-MM-yyyy")}</td>
-                <td>{format(ld.toDate, "dd-MM-yyyy")}</td>                
+                <td>{format(ld.toDate, "dd-MM-yyyy")}</td> 
+                <td>{ld.leaveInfo}</td>               
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>                
               </tr>
