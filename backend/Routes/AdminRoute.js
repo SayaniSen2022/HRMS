@@ -25,12 +25,22 @@ router.post("/adminlogin", (req, res) => {
         { expiresIn: "1d" }
       );
       res.cookie("token", token);
-      return res.json({ loginStatus: true });
+      return res.json({ loginStatus: true, id: result[0].id });
     } else {
       return res.json({ loginStatus: false, Error: "Wrong email or password" });
     }
   });
 });
+
+router.get('/admin-detail/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = `SELECT * FROM admin WHERE id = ?`;
+  con.query(sql, [id], (err, result) => {
+    if(err) return res.json({Status: false});
+    return res.json(result)
+    
+  })
+})
 
 router.get("/category", (req, res) => {
   const sql = "SELECT * FROM `category`";
@@ -208,13 +218,14 @@ router.get('/admin/:id', (req, res) => {
   })
 }) */
 
-  router.get('/get-leaves', (req, res) => {
+  router.get('/get-leaves/:id', (req, res) => {
+    const id = req.params.id;
     const sql = `SELECT info.id, employee.name, info.fromDate, info.toDate, info.leaveInfo, type.type, status.status FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
-    type.leaveId = info.leaveTypeId INNER JOIN tbl_leave_status AS status ON info.statusId = status.statusId INNER JOIN employee AS employee ON info.empId = employee.id WHERE info.adminId = 2`;
+    type.leaveId = info.leaveTypeId INNER JOIN tbl_leave_status AS status ON info.statusId = status.statusId INNER JOIN employee AS employee ON info.empId = employee.id WHERE info.adminId = ?`;
     // const sql = `SELECT fromDate, toDate, type, leaveInfo FROM tbl_leave_info WHERE adminId = 2`;
     const {name, fromDate, toDate, leaveInfo, status, type} = req.body;
 
-    con.query(sql, [name, fromDate, toDate, type, status, leaveInfo], (err, result)=>{
+    con.query(sql, [id, name, fromDate, toDate, type, status, leaveInfo], (err, result)=>{
       console.log(err);
       if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})

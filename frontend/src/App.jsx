@@ -38,7 +38,7 @@ function App() {
         <Route path="" element={<Home/>}/>
         <Route path="/dashboard/employee" element={<Employee/>}/>
         <Route path="/dashboard/category" element={<Category/>}/>
-        <Route path="/dashboard/profile" element={<Profile/>}/>
+        <Route path="/dashboard/admin-detail/:id" element={<Profile/>}/>
         <Route path="/dashboard/leave_portal" element={<LeavePortal/>}/>
         <Route path="/dashboard/add_category" element={<AddCategory/>}/>
         <Route path="/dashboard/add_employee" element={<AddEmployee/>}/>

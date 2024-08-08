@@ -5,6 +5,7 @@ import { format } from "date-fns";
 const LeavePortal = () => {
   const [leaveDetails, setLeaveDetails] = useState([]);
   const [leaveStatDetails, setLeaveStatDetails] = useState([]);
+  const[admin, setAdmin] = useState(JSON.parse(localStorage.getItem("loggedInAdmin")));
 
   const LEAVE_STATUS = {
     Approved : 1,
@@ -13,7 +14,7 @@ const LeavePortal = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/get-leaves")
+      .get("http://localhost:3000/auth/get-leaves/"+ admin.id,)
       .then((result) => {
         if (result.data.Status) {
           setLeaveDetails(result.data.Result);

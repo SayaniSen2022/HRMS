@@ -67,7 +67,7 @@ const Dashboard = () => {
                   <span className="ms-2 d-none d-sm-inline">Category</span>
                 </NavLink>
               </li>
-              <li className="w-100">
+              {/* <li className="w-100">
                 <NavLink
                   to="/dashboard/profile"
                   className="nav-NavLink px-0 align-middle text-decoration-none"
@@ -79,7 +79,7 @@ const Dashboard = () => {
                   <i className="fs-4 bi-person ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Profile</span>
                 </NavLink>
-              </li>
+              </li> */}
               <li className="w-100">
                 <NavLink
                   to="/dashboard/leave_portal"

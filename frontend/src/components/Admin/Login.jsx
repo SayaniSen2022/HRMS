@@ -20,7 +20,7 @@ const Login = () => {
         .then(result => {
             if(result.data.loginStatus){
                 localStorage.setItem("valid", true)
-                navigate('/dashboard');
+                navigate('/dashboard/admin-detail/'+result.data.id);
             }else{
                 setError(result.data.Error)
             }
