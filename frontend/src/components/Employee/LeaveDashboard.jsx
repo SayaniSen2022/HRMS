@@ -9,7 +9,7 @@ const LeaveDashboard = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [leaveInfo, setLeaveInfo] = useState("");
-  const [adminId, setAdminId] = useState(0);
+  // const [adminId, setAdminId] = useState(0);
   const [type, setType] = useState("");
   const [leaveDetails, setLeaveDetails] = useState([]);
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -19,7 +19,18 @@ const LeaveDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/admin")
+      // .get("http://localhost:3000/auth/admin")
+      // .then((result) => {
+      //   if (result.data.Status) {
+      //     setAdmin(result.data.Result);
+      //   } else {
+      //     alert(result.data.Error);
+      //   }
+      // })
+      // .catch((err) => console.log(err));
+
+      axios
+      .get("http://localhost:3000/auth/get-admin/"+user.id)
       .then((result) => {
         if (result.data.Status) {
           setAdmin(result.data.Result);
@@ -60,7 +71,6 @@ const LeaveDashboard = () => {
       fromDate,
       toDate,
       leaveInfo,
-      adminId,
       type,
     };
 
@@ -77,7 +87,7 @@ const LeaveDashboard = () => {
         setFromDate("");
         setToDate("");
         setLeaveInfo("");
-        setAdminId("");
+        // setAdminId("");
         setType("");
       })
       .catch((err) => console.log("Problem"));
@@ -144,13 +154,10 @@ const LeaveDashboard = () => {
                 name="admin"
                 id="admin"
                 className="form-select"
-                value={adminId}
-                onChange={(e) => setAdminId(e.target.value)}
               >
-                <option>Select Admin</option>
                 {admin.map((a) => {
                   return (
-                    <option key={a.id} value={a.id}>
+                    <option key={a.id}>
                       {a.name}
                     </option>
                   );

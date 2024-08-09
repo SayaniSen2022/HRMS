@@ -50,6 +50,16 @@ router.get("/category", (req, res) => {
     return res.json({ Status: true, Result: result });
   });
 });
+router.get("/get-admin/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = `SELECT admin.id, admin.name FROM admin AS admin INNER JOIN employee AS emp ON admin.id = emp.adminId  WHERE emp.id = ?`;
+
+  con.query(sql,[id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
 router.get("/admin", (req, res) => {
   const sql = "SELECT * FROM `admin`";
 

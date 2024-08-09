@@ -66,7 +66,7 @@ router.post("/insert-leave/:id", (req, res) => {
   router.get("/get-leave-details/:id", (req, res) => {
     const id = req.params.id;
     const sql =
-      `SELECT info.fromDate, info.toDate, info.leaveInfo, type.type, status.status FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
+      `SELECT info.id, info.fromDate, info.toDate, info.leaveInfo, type.type, status.status FROM tbl_leave_info AS info INNER JOIN tbl_leave_type AS type ON 
     type.leaveId = info.leaveTypeId INNER JOIN tbl_leave_status AS status ON info.statusId = status.statusId WHERE info.empId = ?`;
     
       con.query(sql, [id], (err, result)=>{
