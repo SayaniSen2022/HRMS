@@ -1,20 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 
 const LeavePortal = () => {
+  const [disabledButtons, setDisabledButtons] = useState({});
   const [leaveDetails, setLeaveDetails] = useState([]);
   const [leaveStatDetails, setLeaveStatDetails] = useState([]);
-  const admin =JSON.parse(localStorage.getItem("loggedInAdmin"));
+  const admin = JSON.parse(localStorage.getItem("loggedInAdmin"));
 
   const LEAVE_STATUS = {
-    Approved : 1,
-    Rejected : 2
-}
+    Approved: 1,
+    Rejected: 2,
+  };
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/get-leaves/"+ admin.id)
+      .get("http://localhost:3000/auth/get-leaves/" + admin.id)
       .then((result) => {
         if (result.data.Status) {
           setLeaveDetails(result.data.Result);
@@ -40,7 +41,9 @@ const LeavePortal = () => {
 
   const approveLeave = (leaveId, statusId) => {
     // console.log(row, status)
-    console.log(leaveDetails)
+    handleButtonState(leaveId, "approve");
+
+    console.log(leaveDetails);
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {
@@ -58,8 +61,10 @@ const LeavePortal = () => {
   };
 
   const rejectLeave = (leaveId, statusId) => {
-    // console.log(row, status)
     // console.log(leaveDetails)
+
+    handleButtonState(leaveId, "reject");
+
     axios
       .put("http://localhost:3000/auth/update-leave", { leaveId, statusId })
       .then((res) => {
@@ -74,6 +79,16 @@ const LeavePortal = () => {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleButtonState = (leaveId, action) => {
+    setDisabledButtons((prevDisabledButtons) => ({
+      ...prevDisabledButtons,
+      [leaveId]: {
+        approve: action === "approve",
+        reject: action === "reject",
+      },
+    }));
   };
 
   return (
@@ -101,10 +116,20 @@ const LeavePortal = () => {
                 <td>{ld.type}</td>
                 <td>{ld.status}</td>
                 <td>
-                  <button className="btn btn-success btn-sm me-2" onClick={() => approveLeave(ld.id, LEAVE_STATUS.Approved)}>
+                  <button
+                    className="btn btn-success btn-sm me-2"
+                    disabled={disabledButtons[ld.id]?.approve}
+                    onClick={() => approveLeave(ld.id, LEAVE_STATUS.Approved)}
+                  >
                     Approve
                   </button>
-                  <button className="btn btn-danger btn-sm" onClick={() => rejectLeave(ld.id, LEAVE_STATUS.Rejected)}>Reject</button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    disabled={disabledButtons[ld.id]?.reject}
+                    onClick={() => rejectLeave(ld.id, LEAVE_STATUS.Rejected)}
+                  >
+                    Reject
+                  </button>
                 </td>
               </tr>
             ))}
